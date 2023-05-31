@@ -504,7 +504,7 @@ manufacturer_part_api_urls = [
 
     # Base URL for ManufacturerPartAttachment API endpoints
     re_path(r'^attachment/', include([
-        path(r'<int:pk>/', ManufacturerPartAttachmentDetail.as_view(), name='api-manufacturer-part-attachment-detail'),
+        path('<int:pk>/', ManufacturerPartAttachmentDetail.as_view(), name='api-manufacturer-part-attachment-detail'),
         re_path(r'^$', ManufacturerPartAttachmentList.as_view(), name='api-manufacturer-part-attachment-list'),
     ])),
 
@@ -515,8 +515,8 @@ manufacturer_part_api_urls = [
         re_path(r'^.*$', ManufacturerPartParameterList.as_view(), name='api-manufacturer-part-parameter-list'),
     ])),
 
-    re_path(r'^(?P<pk>\d+)/?', include([
-        re_path(r'^metadata/', MetadataView.as_view(), {'model': ManufacturerPart}, name='api-manufacturer-part-metadata'),
+    path('<int:pk>/', include([
+        path('metadata/', MetadataView.as_view(), {'model': ManufacturerPart}, name='api-manufacturer-part-metadata'),
         re_path(r'^.*$', ManufacturerPartDetail.as_view(), name='api-manufacturer-part-detail'),
     ])),
 
@@ -527,8 +527,8 @@ manufacturer_part_api_urls = [
 
 supplier_part_api_urls = [
 
-    re_path(r'^(?P<pk>\d+)/?', include([
-        re_path(r'^metadata/', MetadataView.as_view(), {'model': SupplierPart}, name='api-supplier-part-metadata'),
+    path('<int:pk>/', include([
+        path('metadata/', MetadataView.as_view(), {'model': SupplierPart}, name='api-supplier-part-metadata'),
         re_path(r'^.*$', SupplierPartDetail.as_view(), name='api-supplier-part-detail'),
     ])),
 
@@ -549,19 +549,19 @@ company_api_urls = [
         re_path(r'^.*$', SupplierPriceBreakList.as_view(), name='api-part-supplier-price-list'),
     ])),
 
-    re_path(r'^(?P<pk>\d+)/?', include([
-        re_path(r'^metadata/', MetadataView.as_view(), {'model': Company}, name='api-company-metadata'),
+    path('<int:pk>/', include([
+        path('metadata/', MetadataView.as_view(), {'model': Company}, name='api-company-metadata'),
         re_path(r'^.*$', CompanyDetail.as_view(), name='api-company-detail'),
     ])),
 
-    re_path(r'^attachment/', include([
+    path('attachment/', include([
         path(r'<int:pk>/', CompanyAttachmentDetail.as_view(), name='api-company-attachment-detail'),
         re_path(r'^$', CompanyAttachmentList.as_view(), name='api-company-attachment-list'),
     ])),
 
-    re_path(r'^contact/', include([
+    path('contact/', include([
         path('<int:pk>/', include([
-            re_path(r'^metadata/', MetadataView.as_view(), {'model': Contact}, name='api-contact-metadata'),
+            path('metadata/', MetadataView.as_view(), {'model': Contact}, name='api-contact-metadata'),
             re_path(r'^.*$', ContactDetail.as_view(), name='api-contact-detail'),
         ])),
         re_path(r'^.*$', ContactList.as_view(), name='api-contact-list'),
